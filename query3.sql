@@ -48,3 +48,23 @@ INSERT INTO geometries(name, geom) VALUES
 UPDATE geometries SET geom=ST_SetSRID(geom, 4326);
 UPDATE geometries SET geom=ST_SetSRID(geom, 3844);
 
+
+select * from geometries;
+
+select * from geometries where name='point';
+select * from geometries where name='linestring';
+select ST_AsText(geom) from geometries;
+select ST_Area(geom) from geometries where name in('Polygon','PolygonWithHole');
+select ST_Length(geom) from geometries where name in('linestring','Linestring');
+select ST_Perimeter(geom) from geometries;
+select ST_Perimeter(geom) from geometries where name in('Polygon','PolygonWithHole');
+
+select ST_Centroid(geom) from geometries
+UNION
+select geom from geometries;
+
+select ST_Y(ST_Centroid(geom)),ST_X(ST_Centroid(geom)) from geometries;
+
+select ST_Y(geom) as latitude, ST_X(geom) as longitude from geometries where name in ('Point', 'point')
+
+select name, ST_Transform(geom,4326) as geom from geometries;
